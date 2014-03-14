@@ -1,0 +1,114 @@
+Q-18)Write the sql command for following:-
+1.to select all information of employee of rohini area
+2.update the database, set tye phone no as 7047645 where phone no is 7057456
+3.to create a view called Dir with the following fields->Fname,Phone,address
+4.to display data for arpit,rahul and kisan
+5.to delete the rows where the address is Rohini.
+6.to delete the table phYsicallY.
+
+
+mysql> create database directory;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> use directory;
+Database changed
+mysql> create table directory
+    -> (drctno integer,
+    -> fname varchar(20),
+    -> lname varchar(20),
+    -> phone integer,
+    -> addr varchar(20));
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> describe directory;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| drctno | int(11)     | YES  |     | NULL    |       | 
+| fname  | varchar(20) | YES  |     | NULL    |       | 
+| lname  | varchar(20) | YES  |     | NULL    |       | 
+| phone  | int(11)     | YES  |     | NULL    |       | 
+| addr   | varchar(20) | YES  |     | NULL    |       | 
++--------+-------------+------+-----+---------+-------+
+5 rows in set (0.02 sec)
+
+mysql> insert into directory
+    -> values(1,'arpit','singh',7057456,'rohini');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into directory
+    -> values(2,'rahul','singh',7057458,'pm');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into directory
+    -> values(3,'kisan','singh',7057476,'rohini');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into directory
+    -> values(4,'raja','singh',7067458,'pm');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from directory where addr='rohini';
++--------+-------+-------+---------+--------+
+| drctno | fname | lname | phone   | addr   |
++--------+-------+-------+---------+--------+
+|      1 | arpit | singh | 7057456 | rohini | 
+|      3 | kisan | singh | 7057476 | rohini | 
++--------+-------+-------+---------+--------+
+2 rows in set (0.00 sec)
+
+mysql> 
+mysql> update directory 
+    -> set phone=7047645 where phone=7057456;
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> use directory
+Database changed
+mysql> select * from directory;
++--------+-------+-------+---------+--------+
+| drctno | fname | lname | phone   | addr   |
++--------+-------+-------+---------+--------+
+|      1 | arpit | singh | 7047645 | rohini | 
+|      2 | rahul | singh | 7057458 | pm     | 
+|      3 | kisan | singh | 7057476 | rohini | 
+|      4 | raja  | singh | 7067458 | pm     | 
++--------+-------+-------+---------+--------+
+4 rows in set (0.05 sec)
+
+mysql> select fname,phone,addr from directory;
++-------+---------+--------+
+| fname | phone   | addr   |
++-------+---------+--------+
+| arpit | 7047645 | rohini | 
+| rahul | 7057458 | pm     | 
+| kisan | 7057476 | rohini | 
+| raja  | 7067458 | pm     | 
++-------+---------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select fname,phone,addr from directory where fname='arpit' or fname='kisan' or fname='rahul';
++-------+---------+--------+
+| fname | phone   | addr   |
++-------+---------+--------+
+| arpit | 7047645 | rohini | 
+| rahul | 7057458 | pm     | 
+| kisan | 7057476 | rohini | 
++-------+---------+--------+
+3 rows in set (0.00 sec)
+
+mysql> delete from directory where addr='rohini';
+Query OK, 2 rows affected (0.03 sec)
+
+mysql> select * from directory;
++--------+-------+-------+---------+------+
+| drctno | fname | lname | phone   | addr |
++--------+-------+-------+---------+------+
+|      2 | rahul | singh | 7057458 | pm   | 
+|      4 | raja  | singh | 7067458 | pm   | 
++--------+-------+-------+---------+------+
+2 rows in set (0.00 sec)
+
+mysql> drop table directory;
+Query OK, 0 rows affected (0.06 sec)
+

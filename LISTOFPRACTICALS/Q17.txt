@@ -1,0 +1,139 @@
+Q-17)17.Consider a table Department having fields as
+Deptno     Deptname
+Integer    Character
+o Display name of employ ees along with their department having deptno as 1O or 20.
+o Display total salary of each department.
+o DisPlay total salary of each department whose employ name starts with  N or P. 
+
+
+mysql> create database dept;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> use dept;
+Database changed
+mysql> create table dept
+    -> (deptno integer primary key,
+    -> deptname varchar(25),
+    -> empname varchar(25),
+    -> sal integer);
+Query OK, 0 rows affected (0.09 sec)
+
+mysql> insert into dept
+    -> values(23,'acctn','navin',3000);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into dept
+    -> values(13,'mgt','narayan',5600);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into dept
+    -> values(20,'mgt','prem',6600);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into dept
+    -> values(10,'acctn','parag',3600);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into dept
+    -> values(14,'finance','ram',8600);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> alter table dept 
+    -> drop primary key;
+Query OK, 5 rows affected (0.16 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from dept;
++--------+----------+---------+------+
+| deptno | deptname | empname | sal  |
++--------+----------+---------+------+
+|     10 | acctn    | parag   | 3600 | 
+|     13 | mgt      | narayan | 5600 | 
+|     14 | finance  | ram     | 8600 | 
+|     20 | mgt      | prem    | 6600 | 
+|     23 | acctn    | navin   | 3000 | 
++--------+----------+---------+------+
+5 rows in set (0.00 sec)
+
+mysql> select empname from dept where deptno=10 and deptno=20;
+Empty set (0.00 sec)
+
+mysql> select empname from dept where deptno=10 or deptno=20;
++---------+
+| empname |
++---------+
+| parag   | 
+| prem    | 
++---------+
+2 rows in set (0.00 sec)
+
+mysql> select sum(sal) from dept group by deptname;
++----------+
+| sum(sal) |
++----------+
+|     6600 | 
+|     8600 | 
+|    12200 | 
++----------+
+3 rows in set (0.03 sec)
+
+mysql> select sum(sal) from dept where empname like 'n%' or 'p%' group by deptname;
++----------+
+| sum(sal) |
++----------+
+|     3000 | 
+|     5600 | 
++----------+
+2 rows in set, 1 warning (0.00 sec)
+
+
+mysql> select sum(sal) from dept where empname like 'n%' or empname like 'p%' group by deptname;
++----------+
+| sum(sal) |
++----------+
+|     6600 | 
+|    12200 | 
++----------+
+2 rows in set (0.00 sec)
+
+mysql> update dept
+    -> set sal=15000 where empname='parag';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select deptno,sum(sal) from dept group by deptname having sum(sal)>20000;
+Empty set (0.00 sec)
+
+mysql> select sum(sal) from dept having sum(sal)>20000 ;
++----------+
+| sum(sal) |
++----------+
+|    38800 | 
++----------+
+1 row in set (0.00 sec)
+
+mysql> select * from dept;
++--------+----------+---------+-------+
+| deptno | deptname | empname | sal   |
++--------+----------+---------+-------+
+|     10 | acctn    | parag   | 15000 | 
+|     13 | mgt      | narayan |  5600 | 
+|     14 | finance  | ram     |  8600 | 
+|     20 | mgt      | prem    |  6600 | 
+|     23 | acctn    | navin   |  3000 | 
++--------+----------+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> update dept
+    -> set sal=12000 where empname='navin';
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select deptname,sum(sal) from dept group by deptname having sum(sal)>20000;
++----------+----------+
+| deptname | sum(sal) |
++----------+----------+
+| acctn    |    27000 | 
++----------+----------+
+1 row in set (0.00 sec)
+

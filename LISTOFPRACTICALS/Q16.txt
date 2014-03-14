@@ -1,0 +1,41 @@
+mysql> create database employ;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> use employ;
+Database changed
+
+mysql> create table employ
+    -> (empno integer,
+    -> empname varchar(20),
+    -> empjob varchar(20),
+    -> empmgr integer,
+    -> hiredate date,
+    -> empsal integer,
+    -> deptno integer);
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> describe employ;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| empno    | int(11)     | YES  |     | NULL    |       | 
+| empname  | varchar(20) | YES  |     | NULL    |       | 
+| empjob   | varchar(20) | YES  |     | NULL    |       | 
+| empmgr   | int(11)     | YES  |     | NULL    |       | 
+| hiredate | date        | YES  |     | NULL    |       | 
+| empsal   | int(11)     | YES  |     | NULL    |       | 
+| deptno   | int(11)     | YES  |     | NULL    |       | 
++----------+-------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> insert into employ
+    -> values(1,'archit','salesman',45,2020-08-26,10,3)
+    -> ;
+ERROR 1292 (22007): Incorrect date value: '1986' for column 'hiredate' at row 1
+mysql> insert into employ
+    -> values(1,'archit','salesman',45,2020-08-26,10,3);
+ERROR 1292 (22007): Incorrect date value: '1986' for column 'hiredate' at row 1
+mysql> insert into employ
+    -> values(1,'archit','salesman',45,'2020-08-26',10,3);
+Query OK, 1 row affected (0.03 sec)
+
